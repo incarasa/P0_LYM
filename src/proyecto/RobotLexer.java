@@ -21,6 +21,7 @@ public class RobotLexer {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
+            	line = line.replaceAll("\\s+","");
                 tokenize(line);
             }
         } catch (IOException e) {
@@ -32,20 +33,20 @@ public class RobotLexer {
         // la expresiones regulares para simplificar la sintaxis
         Pattern commandPattern = Pattern.compile("\\(|\\)|defvar|if|can-move\\?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick|run-dirs");
         Pattern variablePattern = Pattern.compile("([a-zA-Z]+)"); // Variables
-        Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces)"); // Constantes
-        Pattern numberPattern = Pattern.compile("\\d+"); // Numeros
-        Pattern separatorPattern = Pattern.compile("\\s+"); // Espacios, cambios de linea y tabs
-
-        Matcher matcher = commandPattern.matcher(line);
-
+        Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces|left|:right|:around|:north|:south|:east|:west|:balloons|:chips|:front)"); // Constantes
+        
+        Pattern combinedPattern = Pattern.compile(commandPattern.pattern() + "|" +
+                variablePattern.pattern() + "|" +
+                constantPattern.pattern());
+                
+        Matcher matcher = combinedPattern.matcher(line);
+        
         while (matcher.find()) {
-            String token = matcher.group().toLowerCase(); // Convert to lowercase
-            // se ignoran los espacios lineas  y tabs
-            if (!separatorPattern.matcher(token).matches()) {
-                tokens.add(token);
-            }
+            String token = matcher.group().toLowerCase(); // Convert to lowercase            
+            tokens.add(token);
         }
-    }
+    }   
+
     
     public String getNextToken() {
         if (currentTokenIndex < tokens.size()) {
