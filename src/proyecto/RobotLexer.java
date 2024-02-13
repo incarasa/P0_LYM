@@ -31,7 +31,7 @@ public class RobotLexer {
 
     private void tokenize(String line) {
         // la expresiones regulares para simplificar la sintaxis
-        Pattern commandPattern = Pattern.compile("\\(|\\)|defvar|if|can-move\\?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick|run-dirs");
+        Pattern commandPattern = Pattern.compile("\\(|\\)|defvar|if|can-move\\?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick\\s.|run-dirs ");
         Pattern variablePattern = Pattern.compile("([a-zA-Z]+)"); // Variables
         Pattern numberPattern = Pattern.compile("\\d+"); // numeros
         Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces|left|:right|:around|:north|:south|:east|:west|:balloons|:chips|:front)"); // Constantes
@@ -44,7 +44,7 @@ public class RobotLexer {
         Matcher matcher = combinedPattern.matcher(line);
         
         while (matcher.find()) {
-            String token = matcher.group().toLowerCase(); // Convert to lowercase            
+            String token = matcher.group(); // Convert to lowercase            
             tokens.add(token);
         }
     }   
