@@ -29,18 +29,18 @@ public class RobotLexer {
     }
 
     private void tokenize(String line) {
-        // Define regex patterns for different tokens
+        // la expresiones regulares para simplificar la sintaxis
         Pattern commandPattern = Pattern.compile("\\(|\\)|defvar|if|can-move\\?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick|run-dirs");
         Pattern variablePattern = Pattern.compile("([a-zA-Z]+)"); // Variables
-        Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces)"); // Constants
-        Pattern numberPattern = Pattern.compile("\\d+"); // Numbers
-        Pattern separatorPattern = Pattern.compile("\\s+"); // Spaces, newlines, and tabulators
+        Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces)"); // Constantes
+        Pattern numberPattern = Pattern.compile("\\d+"); // Numeros
+        Pattern separatorPattern = Pattern.compile("\\s+"); // Espacios, cambios de linea y tabs
 
         Matcher matcher = commandPattern.matcher(line);
 
         while (matcher.find()) {
             String token = matcher.group().toLowerCase(); // Convert to lowercase
-            // Ignore spaces, newlines, and tabulators
+            // se ignoran los espacios lineas  y tabs
             if (!separatorPattern.matcher(token).matches()) {
                 tokens.add(token);
             }
@@ -55,7 +55,7 @@ public class RobotLexer {
     }
 
     public static void main(String[] args) {
-        // Example usage
+        //el main
         RobotLexer lexer = new RobotLexer("data/programaPrueba.txt");
         String token;
         while ((token = lexer.getNextToken()) != null) {
