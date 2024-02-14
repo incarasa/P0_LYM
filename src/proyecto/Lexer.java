@@ -18,7 +18,6 @@ public class Lexer
 	private String text;
 	private int position = -1;
 	private String currentChar = null;
-	private int len = text.length();
 	
 	private List<Token> tokens = new ArrayList<Token>();
 	
@@ -38,7 +37,7 @@ public class Lexer
 	public void advance()
 	{
 		this.position += 1;
-		if (position < len)
+		if (position < this.text.length())
 		{
 			this.currentChar = String.valueOf(text.charAt(position));
 		}
@@ -52,10 +51,12 @@ public class Lexer
 	public Error makeTokens()
 	{
 		this.tokens.clear(); //limpiar la lista
+		this.position = -1;
+		advance();
 		
 		while(this.currentChar != null)
 		{
-			if(this.currentChar == "" || this.currentChar == "\n")
+			if(this.currentChar.equals(" ") || this.currentChar.equals("\n"))
 			{
 				advance();
 			}
@@ -63,17 +64,20 @@ public class Lexer
 			{
 				this.tokens.add(makeNumber());
 			}
-			else if (this.currentChar == "(") 
+			else if (this.currentChar.equals("(")) 
 			{
 				this.tokens.add(new Token(TT_LPAREN));
+				advance();
 			}
-			else if (this.currentChar == ")") 
+			else if (this.currentChar.equals(")")) 
 			{
 				this.tokens.add(new Token(TT_RPAREN));
+				advance();
 			}
-			else if (this.currentChar == "=") 
+			else if (this.currentChar.equals("=")) 
 			{
 				this.tokens.add(new Token(TT_EQ));
+				advance();
 			}
 			else
 			{

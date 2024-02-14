@@ -14,6 +14,6 @@ public class IntToken extends Token
 	@Override
 	public String representation()
 	{
-		return this.type + this.value;
+		return this.type + ":" + this.value;
 	}
 }
