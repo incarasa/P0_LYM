@@ -29,8 +29,8 @@ public class RobotLexer {
 
     private static void tokenize(String input, List<String> tokens) {
         int index = 0;
-        Pattern commandPattern = Pattern.compile("\\([^()]*\\)|defvar|(if)|can-move?|can-put?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick\\s\\.|run-dirs\\b");
-        Pattern variablePattern = Pattern.compile("([a-zA-Z]+)"); // Variables
+        Pattern commandPattern = Pattern.compile("\\([^()]*\\)|defvar|(if)|M|R|C|B|C|c|b|P|J(s\\.?)|can-move?|can-put?|move-dir|turn|not|blocked\\?|move|repeat|Spaces|isZero\\?|defun|put|pick\\s\\.|run-dirs\\b");
+        Pattern variablePattern = Pattern.compile("^[a-zA-Z0-9]+$"); // Variables
         Pattern numberPattern = Pattern.compile("\\d+"); // numeros
         Pattern constantPattern = Pattern.compile("(Dim|myXpos|myYpos|myChips|myBalloons|balloonsHere|ChipsHere|Spaces|left|:right|:around|:north|:south|:east|:west|:balloons|:chips|:front)"); // Constantes
 
@@ -87,17 +87,6 @@ public class RobotLexer {
         return (count == 0) ? index - 1 : -1;
     }
 
-    public static void main(String[] args) {
-        String filePath = "data/programaPrueba.txt"; // Reemplaza con la ruta correcta de tu archivo
-        List<String> tokens = tokenizeFromFile(filePath);
-        
 
-        for (String token : tokens) {
-            System.out.println("Token: " + token);
-        }
-        
-        RobotParser parser = new RobotParser(tokens);
-        parser.parseTokens();
-    }
 }
 
