@@ -11,7 +11,7 @@ public class Ejecutar {
 
         // Paso 2: Imprimir los tokens generados por RobotLexer
         for (String token : tokens) {
-            System.out.println("Token: " + token);
+            //System.out.println("Token: " + token);
         }
 
         // Paso 3: Ejecutar RobotParser para verificar la sintaxis de los tokens
